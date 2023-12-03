@@ -1,49 +1,64 @@
 from tkinter import *
-from elements import *
+from elements import tkElements
 from ciphers import *
 from tkinter import ttk
+from functions import cipherFunctions
 
 class cipherInterface:
     def __init__(self, master) -> None:
         
         theme = ttk.Style(master)
         theme.theme_use('clam')
+
+        fgPrim = '#fdfdfd'
+        fgSec = '#69becf'
+        bg1 = 'gray20'
+        bg2 = 'gray25'
+        bg3 = 'gray30'
+        bgPrim = 'gray10'
+        bgSec = 'gray15'
+
+        Elements = tkElements(fgPrim, fgSec, bgPrim, bgSec, bg1, bg2, bg3)
+        Functions = cipherFunctions()
         
-        self.Cipher = IntVar(master).set(0) # Stores cipher currently in use, controlled by radio buttons
-        outputVar = StringVar(master).set('')
-        inputVar = StringVar(master).set('')
-        keyVar = StringVar(master).set('')
+        self.Cipher = IntVar(master) # Stores cipher currently in use, controlled by radio buttons
+        self.Cipher.set(0)
+        outputVar = StringVar(master)
+        inputVar = StringVar(master)
+        keyVar = StringVar(master)
+
+        self.nonKeyCiphers = [1]
+        self.radioButtonList = []
 
         master.configure(bg=bgPrim) # Window configuration
         master.title('Encrypter')
         master.option_add('*Font', 'helvetica 20')
         master.option_add('*Backgound', bgPrim)
-        master.option_add('*Label.Font', 'helvetica 14')
         master.geometry('715x360+0+0')
 
         topFrame = Frame(master, bg=bgSec) # Initialises the title bar
         topFrame.pack(side='top',fill='x')
-        text(topFrame,'left','h1','Encrypter')
+        Elements.text(topFrame,'left','h1','Encrypter')
 
         primaryFrame = Frame(master, bg=bgPrim) # Initialises the container for the main frames
         primaryFrame.pack(side='left', fill=BOTH, expand=1)
         primaryFrame.subFrames = []
 
         for bg in [bg3, bg2, bg1]:
-            primaryFrame.subFrames.append(subFrame(primaryFrame, bg, 'left')) # Initialises the main, user interactable frames
+            primaryFrame.subFrames.append(Elements.subFrame(primaryFrame, bg, 'left')) # Initialises the main, user interactable frames
 
-        text(primaryFrame.subFrames[0], 'top', 'h3', 'Plain Text Input', 0, 10)
-        inputTextBox = textEntry(primaryFrame.subFrames[0], 'top', inputVar) # Shown always
-        keyText = text(primaryFrame.subFrames[0], 'top', 'h3', 'Key Input', 0, 0)
-        keyTextBox = textEntry(primaryFrame.subFrames[0], 'top', keyVar) # Shown conditionally
+        Elements.text(primaryFrame.subFrames[0], 'top', 'h3', 'Plain Text Input', 0, 10)
+        inputTextBox = Elements.textEntry(primaryFrame.subFrames[0], 'top','p', inputVar) # Shown always
+        keyText = Elements.text(primaryFrame.subFrames[0], 'top', 'h3', 'Key Input', 0, 0)
+        keyTextBox = Elements.textEntry(primaryFrame.subFrames[0], 'top','p', keyVar) # Shown conditionally
         
-        outputBox = textEntry(primaryFrame.subFrames[2], 'top', outputVar, DISABLED)
+        outputBox = Elements.textOutput(primaryFrame.subFrames[2], 'top','h3', outputVar)
 
-
-        radioButtons = []
         for count, cipher in enumerate(CipherList,0): # Uses iteration to initialise a radio button for each cipher in the 'CipherList' list
-            radioButtons.append(radio(primaryFrame.subFrames[1], 'top', var=self.Cipher, val=count, content=cipher))
-
+            print(count)
+            print(self.Cipher.get())
+            self.radioButtonList.append(Elements.radio(primaryFrame.subFrames[1], 'top', var=self.Cipher, val=count, content=cipher, radioFunc=lambda: cipherFunctions.keyVisibility(self.Cipher,self.nonKeyCiphers,{keyText:0,keyTextBox:10})))
+    
 
 def main():
     root=Tk()
