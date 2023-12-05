@@ -1,9 +1,9 @@
 from tkinter import *
-from ciphers import *
 
 class cipherFunctions:
-    def __init__(self, nonKeys) -> None:
+    def __init__(self, nonKeys, cipherList) -> None:
         self.nonKeys = nonKeys
+        self.cipherList = cipherList
 
     def keyVisibility(self,master,cipher, widgets):
         print(cipher.get())
@@ -17,5 +17,11 @@ class cipherFunctions:
                 print('debug2')
                 widget.pack(side='top',padx=widgets.get(widget),pady=widgets.get(widget), expand=widgets.get(widget),fill=BOTH)
     
-    def encrypt(self, cipher, input, key):
-        pass
+    def encrypt(self, cipher,input,output,key=0):
+        for count, cipherFunc in enumerate(self.cipherList.items(),0):
+            if count == cipher: 
+                encryptedOutput = cipherFunc[1](input,int(key))
+                print(encryptedOutput)
+                output.insert(0,encryptedOutput)
+
+        
