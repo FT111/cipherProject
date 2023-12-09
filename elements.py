@@ -32,7 +32,7 @@ class tkElements:
         return label
 
     def textOutput(self, frame, entrySide:str, type:str, var):
-        entry = Entry(frame, font=(f'{self.font}',f'{self.textSizes.get(type)}'), textvariable=var,disabledbackground=frame['background'],bg=frame['background'], fg=self.fgPrim, state=DISABLED,highlightbackground=self.fgSec,relief=FLAT)
+        entry = Text(frame, font=(f'{self.font}',f'{self.textSizes.get(type)}'),fg='white', bg=frame['background'], relief=FLAT)
         entry.pack(side=entrySide,padx=10,pady=10,fill=BOTH, expand=1)
 
         return entry
