@@ -63,6 +63,7 @@ class cipherInterface:
 
         encryptButton = Elements.button(topFrame, 'right', 'Encrypt','h2',lambda:Functions.encrypt(self.Cipher.get(),outputBox))
         decryptButton = Elements.button(topFrame, 'right', 'Decrypt','h2',lambda:Functions.decrypt(self.Cipher.get(),outputBox))
+        freqButton = Elements.button(topFrame, 'right', 'Freq. Analysis','h2',lambda:Functions.frequencyAnalysis(outputBox))
 
         for count, cipher in enumerate(self.CipherList,0): # Uses iteration to initialise a radio button for each cipher in the 'CipherList' list
             self.radioButtonList.append(Elements.radio(primaryFrame.subFrames[1], 'top', var=self.Cipher, val=count, content=cipher, radioFunc=lambda: Functions.keyVisibility(master,self.Cipher,{keyText:0,keyTextBox:10})))
