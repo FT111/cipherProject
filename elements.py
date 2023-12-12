@@ -30,7 +30,7 @@ class tkElements:
 
         return label
 
-    def textOutput(self, frame, entrySide:str, type:str, var):
+    def textOutput(self, frame, entrySide:str, type:str, var=0):
         entry = Text(frame, font=(f'{self.font}',f'{self.textSizes.get(type)}'),fg='white', bg=frame['background'], relief=FLAT)
         entry.pack(side=entrySide,padx=10,pady=10,fill=BOTH, expand=1)
 
@@ -45,6 +45,11 @@ class tkElements:
     def button(self, frame, buttonSide:str,content:str,type:str, buttonCommand, buttonExpand=0, padding=10):
         button = Button(frame, font=(f'{self.font}',f'{self.textSizes.get(type)}', 'bold'), command=buttonCommand,bg=self.bg1,activebackground=self.fgSec, fg=self.fgPrim, text=content,highlightbackground=self.fgSec, relief=FLAT)
         button.pack(side=buttonSide,padx=padding,pady=padding, expand=buttonExpand,fill=BOTH)
+
+        return button
+    def smallButton(self, frame, buttonSide:str,buttonText, buttonCommand, buttonExpand=0, padding=10):
+        button = Button(frame,width=5,height=2, command=buttonCommand,bg=self.bg1,activebackground=self.fgSec, fg=self.fgPrim, text=buttonText,highlightbackground=self.fgSec, relief=FLAT)
+        button.pack(side=buttonSide,padx=padding,pady=padding, expand=buttonExpand)
 
         return button
 
