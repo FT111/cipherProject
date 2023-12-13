@@ -30,7 +30,7 @@ class cipherInterface:
         master.configure(bg=bgPrim) # Window configuration
         master.title('Encrypter')
         master.option_add('*Backgound', bgPrim)
-        master.geometry('850x400')
+        master.geometry('723x400')
 
         
         #
@@ -79,7 +79,7 @@ class cipherInterface:
 
         encryptButton = Elements.button(topFrame, 'right', 'Encrypt','h2',lambda:Functions.encrypt(self.Cipher.get(),outputBox))
         decryptButton = Elements.button(topFrame, 'right', 'Decrypt','h2',lambda:Functions.decrypt(self.Cipher.get(),outputBox))
-        freqButton = Elements.button(topFrame, 'right', 'Freq. Analysis','h2',lambda:Functions.frequencyAnalysis(outputBox))
+        freqButton = Elements.smallButton(leftFrame, 'top', '📊',lambda:Functions.frequencyAnalysis(outputBox),0) # Places info button in the frame, uses a preset small button.
 
         for count, cipher in enumerate(self.CipherList,0): # Uses iteration to initialise a radio button for each cipher in the 'CipherList' list
             self.radioButtonList.append(Elements.radio(primaryFrame.subFrames[1], 'top', var=self.Cipher, val=count, content=cipher))
