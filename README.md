@@ -1,1 +1,3 @@
 # cipherProject
+
+Requirements: Matplotlib, Numpy
