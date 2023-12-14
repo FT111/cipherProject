@@ -28,7 +28,7 @@ class Ciphers:
                 result += chr((ord(char) + key-65) % 26 + 65)
             # Encrypt lowercase characters in plain text
             elif char==' ':
-                result += ' '
+                result += ' ' # Leaves spaces intact for readability
             else:
                 result += chr((ord(char) + key - 97) % 26 + 97)
         return result
@@ -46,24 +46,27 @@ class Ciphers:
     
     def vigenereCipher(self, encrypt=True):
         key = self.keyVar.get()
-        text = self.inputVar.get().upper()
-        key = list(key)
-        cipherText = []
-        if len(text) == len(key): # Formatting key
-            return(key)
+        if key != '':
+            text = self.inputVar.get().upper()
+            key = list(key)
+            cipherText = []
+            if len(text) == len(key): # Formatting key
+                return(key)
+            else:
+                for i in range(len(text) - len(key)):
+                    key.append(key[i % len(key)])
+            key = "" . join(key)
+            if encrypt==True: # Encryption
+                for i in range(len(text)): # Each letter uses a seperate ceaser cipher
+                    x = (ord(text[i]) + ord(key[i])) % 26 
+                    x += ord('A')
+                    cipherText.append(chr(x))
+            else:
+                for i in range(len(text)):
+                    x = (ord(text[i]) - ord(key[i]) + 26) % 26 # Decryption
+                    x += ord('A')
+                    cipherText.append(chr(x))
+            return "".join(cipherText)
         else:
-            for i in range(len(text) - len(key)):
-                key.append(key[i % len(key)])
-        key = "" . join(key)
-        if encrypt==True: # Encryption
-            for i in range(len(text)): # Each letter uses a seperate ceaser cipher
-                x = (ord(text[i]) + ord(key[i])) % 26 
-                x += ord('A')
-                cipherText.append(chr(x))
-        else:
-            for i in range(len(text)):
-                x = (ord(text[i]) - ord(key[i]) + 26) % 26 # Decryption
-                x += ord('A')
-                cipherText.append(chr(x))
-        return "".join(cipherText)
+            return 'Invalid key'
     
